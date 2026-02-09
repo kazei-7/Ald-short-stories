@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grimoire d'Histoires • Collection Mystique</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Spectral:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Animated particles -->
+    <div id="particles"></div>
+    
+    <!-- Header -->
+    <header class="relative z-10 pt-12 md:pt-20 pb-8 md:pb-16 px-4 md:px-6">
+        <div class="max-w-7xl mx-auto text-center">
+            <h1 class="title-font text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black text-gold text-glow mb-4 md:mb-6 animate-fade-in-down leading-tight">
+                GRIMOIRE D'HISTOIRES
+            </h1>
+            <p class="text-base sm:text-lg md:text-xl lg:text-2xl text-white/80 italic animate-fade-in-up px-4" style="animation-delay: 0.2s;">
+                ⟡ Une collection de légendes mystiques ⟡
+            </p>
+        </div>
+    </header>
+    
+    <!-- Add Story Button -->
+    <div class="relative z-10 max-w-7xl mx-auto px-4 md:px-6 mb-8 md:mb-16 text-center animate-fade-in-up" style="animation-delay: 0.4s;">
+        <button onclick="openAddModal()" class="btn-epic">
+            <span class="text-sm sm:text-base">✦ Créer une Légende ✦</span>
+        </button>
+    </div>
+    
+    <!-- Stories Grid -->
+    <main class="relative z-10 max-w-7xl mx-auto px-4 md:px-6 pb-12 md:pb-24">
+        <div id="storiesGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
+            <!-- Stories will be dynamically inserted here -->
+        </div>
+        
+        <div id="emptyState" class="text-center py-12 md:py-24 px-4">
+            <p class="title-font text-2xl sm:text-3xl md:text-4xl text-gold/60 mb-3 md:mb-4">Le grimoire est vide</p>
+            <p class="text-base sm:text-lg md:text-xl text-white/40">Inscrivez votre première légende dans ces pages sacrées</p>
+        </div>
+    </main>
+    
+    <!-- Add Story Modal -->
+    <div id="addModal" class="modal">
+        <div class="modal-content">
+            <div class="ornate-corner top-left"></div>
+            <div class="ornate-corner top-right"></div>
+            <div class="ornate-corner bottom-left"></div>
+            <div class="ornate-corner bottom-right"></div>
+            <button onclick="closeAddModal()" class="close-btn">✕</button>
+            <div class="p-6 sm:p-8 md:p-10 lg:p-14">
+                <h2 class="title-font text-3xl sm:text-4xl md:text-5xl font-black text-gold mb-2 text-center">Nouvelle Légende</h2>
+                <div class="divider"></div>
+                
+                <form id="storyForm" onsubmit="handleSubmit(event)">
+                    <div class="mb-4 sm:mb-6">
+                        <label class="form-label text-sm sm:text-base">Titre de la Légende</label>
+                        <input type="text" id="storyTitle" class="form-input text-sm sm:text-base" placeholder="Le nom qui résonnera à travers les âges..." required>
+                    </div>
+                    
+                    <div class="mb-4 sm:mb-6">
+                        <label class="form-label text-sm sm:text-base">Illustration Mystique</label>
+                        <input type="file" id="storyImage" class="form-input text-sm sm:text-base" accept="image/*" onchange="previewImage(event)">
+                        <img id="imagePreview" class="image-preview hidden">
+                    </div>
+                    
+                    <div class="mb-6 sm:mb-8">
+                        <label class="form-label text-sm sm:text-base">Récit Épique</label>
+                        <textarea id="storyContent" class="form-textarea text-sm sm:text-base" rows="10" placeholder="Que racontent les chroniques anciennes..." required></textarea>
+                    </div>
+                    
+                    <div class="text-center">
+                        <button type="submit" class="btn-epic">
+                            <span class="text-sm sm:text-base">⚔ Inscrire dans le Grimoire ⚔</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <!-- View Story Modal -->
+    <div id="viewModal" class="modal">
+        <div class="modal-content">
+            <div class="ornate-corner top-left"></div>
+            <div class="ornate-corner top-right"></div>
+            <div class="ornate-corner bottom-left"></div>
+            <div class="ornate-corner bottom-right"></div>
+            <button onclick="closeViewModal()" class="close-btn">✕</button>
+            <div id="viewContent">
+                <!-- Story content will be dynamically inserted here -->
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
