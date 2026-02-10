@@ -1,3 +1,21 @@
+// Firebase configuration
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js';
+import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, query, orderBy } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js';
+
+const firebaseConfig = {
+    apiKey: "AIzaSyDuwXo_a3Xarsl8Ob47JfuTSEflEilXWxw",
+    authDomain: "ald-short-stories.firebaseapp.com",
+    projectId: "ald-short-stories",
+    storageBucket: "ald-short-stories.firebasestorage.app",
+    messagingSenderId: "879215917183",
+    appId: "1:879215917183:web:4c47a70c8c6df024a6274a",
+    measurementId: "G-CDSJYG1DRH"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
 // Create mystical particles
 function createParticles() {
     const container = document.getElementById('particles');
@@ -17,12 +35,33 @@ function createParticles() {
 createParticles();
 
 // Storage for stories
-let stories = JSON.parse(localStorage.getItem('mtg_stories')) || [];
+let stories = [];
 
 // Initialize
 document.addEventListener('DOMContentLoaded', function() {
-    renderStories();
+    loadStoriesFromFirebase();
 });
+
+// Load stories from Firebase
+async function loadStoriesFromFirebase() {
+    try {
+        const storiesQuery = query(collection(db, 'stories'), orderBy('timestamp', 'desc'));
+        const querySnapshot = await getDocs(storiesQuery);
+        
+        stories = [];
+        querySnapshot.forEach((doc) => {
+            stories.push({
+                firestoreId: doc.id,
+                ...doc.data()
+            });
+        });
+        
+        renderStories();
+    } catch (error) {
+        console.error("Erreur lors du chargement des histoires:", error);
+        alert("Erreur lors du chargement des histoires. Veuillez réessayer.");
+    }
+}
 
 // Preview image
 function previewImage(event) {
@@ -79,54 +118,71 @@ function getRandomMana() {
 }
 
 // Handle form submission
-function handleSubmit(event) {
+async function handleSubmit(event) {
     event.preventDefault();
     
     const title = document.getElementById('storyTitle').value;
     const content = document.getElementById('storyContent').value;
     const imageFile = document.getElementById('storyImage').files[0];
     
-    if (imageFile) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
+    // Show loading state
+    const submitBtn = event.target.querySelector('button[type="submit"]');
+    const originalText = submitBtn.innerHTML;
+    submitBtn.innerHTML = '<span>⏳ Inscription en cours...</span>';
+    submitBtn.disabled = true;
+    
+    try {
+        if (imageFile) {
+            const reader = new FileReader();
+            reader.onload = async function(e) {
+                const story = {
+                    id: Date.now(),
+                    title: title,
+                    content: content,
+                    image: e.target.result,
+                    mana: getRandomMana(),
+                    date: new Date().toLocaleDateString('fr-FR', { 
+                        day: 'numeric', 
+                        month: 'long', 
+                        year: 'numeric' 
+                    }),
+                    timestamp: Date.now()
+                };
+                
+                await addDoc(collection(db, 'stories'), story);
+                await loadStoriesFromFirebase();
+                closeAddModal();
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+            }
+            reader.readAsDataURL(imageFile);
+        } else {
+            // Story without image - create mystical placeholder
             const story = {
                 id: Date.now(),
                 title: title,
                 content: content,
-                image: e.target.result,
+                image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="300"%3E%3Cdefs%3E%3ClinearGradient id="g" x1="0%25" y1="0%25" x2="100%25" y2="100%25"%3E%3Cstop offset="0%25" style="stop-color:%237b4397;stop-opacity:1" /%3E%3Cstop offset="100%25" style="stop-color:%230e68ab;stop-opacity:1" /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect fill="url(%23g)" width="400" height="300"/%3E%3Ctext x="50%25" y="50%25" font-size="28" fill="%23d4af37" text-anchor="middle" dominant-baseline="middle" font-family="Cinzel"%3E✦%3C/text%3E%3C/svg%3E',
                 mana: getRandomMana(),
                 date: new Date().toLocaleDateString('fr-FR', { 
                     day: 'numeric', 
                     month: 'long', 
                     year: 'numeric' 
-                })
+                }),
+                timestamp: Date.now()
             };
             
-            stories.unshift(story);
-            localStorage.setItem('mtg_stories', JSON.stringify(stories));
-            renderStories();
+            await addDoc(collection(db, 'stories'), story);
+            await loadStoriesFromFirebase();
             closeAddModal();
+            submitBtn.innerHTML = originalText;
+            submitBtn.disabled = false;
         }
-        reader.readAsDataURL(imageFile);
-    } else {
-        // Story without image - create mystical placeholder
-        const story = {
-            id: Date.now(),
-            title: title,
-            content: content,
-            image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="300"%3E%3Cdefs%3E%3ClinearGradient id="g" x1="0%25" y1="0%25" x2="100%25" y2="100%25"%3E%3Cstop offset="0%25" style="stop-color:%237b4397;stop-opacity:1" /%3E%3Cstop offset="100%25" style="stop-color:%230e68ab;stop-opacity:1" /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect fill="url(%23g)" width="400" height="300"/%3E%3Ctext x="50%25" y="50%25" font-size="28" fill="%23d4af37" text-anchor="middle" dominant-baseline="middle" font-family="Cinzel"%3E✦%3C/text%3E%3C/svg%3E',
-            mana: getRandomMana(),
-            date: new Date().toLocaleDateString('fr-FR', { 
-                day: 'numeric', 
-                month: 'long', 
-                year: 'numeric' 
-            })
-        };
-        
-        stories.unshift(story);
-        localStorage.setItem('mtg_stories', JSON.stringify(stories));
-        renderStories();
-        closeAddModal();
+    } catch (error) {
+        console.error("Erreur lors de l'ajout de l'histoire:", error);
+        alert("Erreur lors de l'ajout de l'histoire. Veuillez réessayer.");
+        submitBtn.innerHTML = originalText;
+        submitBtn.disabled = false;
     }
 }
 
@@ -144,8 +200,8 @@ function renderStories() {
     emptyState.style.display = 'none';
     
     grid.innerHTML = stories.map(story => `
-        <article class="mtg-card cursor-pointer" onclick="viewStory(${story.id})">
-            <button onclick="deleteStory(event, ${story.id})" class="delete-card-btn" title="Détruire">
+        <article class="mtg-card cursor-pointer" onclick="viewStory('${story.firestoreId}')">
+            <button onclick="deleteStory(event, '${story.firestoreId}')" class="delete-card-btn" title="Détruire">
                 ✕
             </button>
             <div class="card-image-frame m-2 sm:m-3">
@@ -166,8 +222,8 @@ function renderStories() {
 }
 
 // View story in modal
-function viewStory(id) {
-    const story = stories.find(s => s.id === id);
+function viewStory(firestoreId) {
+    const story = stories.find(s => s.firestoreId === firestoreId);
     if (!story) return;
     
     const viewContent = document.getElementById('viewContent');
@@ -195,13 +251,17 @@ function viewStory(id) {
 }
 
 // Delete story
-function deleteStory(event, id) {
+async function deleteStory(event, firestoreId) {
     event.stopPropagation();
     
     if (confirm('Voulez-vous vraiment détruire cette légende du grimoire ?')) {
-        stories = stories.filter(s => s.id !== id);
-        localStorage.setItem('mtg_stories', JSON.stringify(stories));
-        renderStories();
+        try {
+            await deleteDoc(doc(db, 'stories', firestoreId));
+            await loadStoriesFromFirebase();
+        } catch (error) {
+            console.error("Erreur lors de la suppression:", error);
+            alert("Erreur lors de la suppression. Veuillez réessayer.");
+        }
     }
 }
 
@@ -225,3 +285,12 @@ document.getElementById('viewModal').addEventListener('click', function(event) {
         closeViewModal();
     }
 });
+
+// Make functions global
+window.previewImage = previewImage;
+window.openAddModal = openAddModal;
+window.closeAddModal = closeAddModal;
+window.closeViewModal = closeViewModal;
+window.handleSubmit = handleSubmit;
+window.viewStory = viewStory;
+window.deleteStory = deleteStory;
