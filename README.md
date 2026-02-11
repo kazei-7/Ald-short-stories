@@ -19,7 +19,7 @@ service cloud.firestore {
       allow read: if true;
       
       // Tout le monde peut créer, modifier et supprimer des histoires
-      // Pour une version plus sécurisée, vous devriez ajouter l'authentification
+      // Pour une version plus sécurisée, vous ajouter l'authentification
       allow write: if true;
     }
   }
