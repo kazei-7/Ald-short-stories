@@ -2,7 +2,16 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js';
 import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, query, orderBy } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js';
 
-
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyDuwXo_a3Xarsl8Ob47JfuTSEflEilXWxw",
+  authDomain: "ald-short-stories.firebaseapp.com",
+  projectId: "ald-short-stories",
+  storageBucket: "ald-short-stories.firebasestorage.app",
+  messagingSenderId: "879215917183",
+  appId: "1:879215917183:web:4c47a70c8c6df024a6274a",
+  measurementId: "G-CDSJYG1DRH"
+};
 
 
 // Initialize Firebase
@@ -287,4 +296,5 @@ window.closeViewModal = closeViewModal;
 window.handleSubmit = handleSubmit;
 window.viewStory = viewStory;
 window.deleteStory = deleteStory;
+
 
