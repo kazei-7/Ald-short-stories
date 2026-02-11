@@ -68,6 +68,4 @@ Si quelque chose ne fonctionne pas :
 2. Vérifiez que les règles Firestore sont bien configurées
 3. Assurez-vous que les fichiers sont bien uploadés sur GitHub
 
----
 
-**Bon grimoire ! 📖✨**
