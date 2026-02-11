@@ -1,7 +1,7 @@
 # Ald-short-stories
 Un recueil d'histoires fantastisques regroupés sous la forme de courtes histoires. 
 
-# Grimoire d'Histoires - Firebase Integration
+# Recueil d'Histoires - Firebase Integration
 
 ## Étapes pour mettre à jour votre site GitHub Pages
 
@@ -46,7 +46,6 @@ Cliquez sur **Publier** pour appliquer ces règles.
 - ✅ **Stockage en ligne** : Les histoires sont maintenant sauvegardées dans Firebase
 - ✅ **Accessible partout** : N'importe qui peut voir toutes les histoires
 - ✅ **Synchronisation automatique** : Les nouvelles histoires apparaissent pour tout le monde
-- ✅ **Indicateur de chargement** : Message "Inscription en cours..." pendant la sauvegarde
 
 ## 🔒 Sécurité (optionnel - pour plus tard)
 
