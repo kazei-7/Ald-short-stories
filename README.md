@@ -1,9 +1,9 @@
 # Ald-short-stories
 Un recueil d'histoires fantastisques regroupés sous la forme de courtes histoires. 
 
-# 🔥 Grimoire d'Histoires - Firebase Integration
+# Grimoire d'Histoires - Firebase Integration
 
-## 📋 Étapes pour mettre à jour votre site GitHub Pages
+## Étapes pour mettre à jour votre site GitHub Pages
 
 ### 1. Configurer les règles de sécurité Firebase
 
