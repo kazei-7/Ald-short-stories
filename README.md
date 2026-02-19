@@ -44,7 +44,9 @@ Cliquez sur **Publier** pour appliquer ces règles.
   Nouvelles fonctionnalités
 
   **Stockage en ligne** : Les histoires sont maintenant sauvegardées dans Firebase
+  
   **Accessible partout** : N'importe qui peut voir toutes les histoires
+  
  **Synchronisation automatique** : Les nouvelles histoires apparaissent pour tout le monde
 
  Sécurité ( pour plus tard)
