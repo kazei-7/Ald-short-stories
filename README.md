@@ -19,7 +19,7 @@ service cloud.firestore {
       allow read: if true;
       
       // Tout le monde peut créer, modifier et supprimer des histoires
-      // Pour une version plus sécurisée, vous ajouter l'authentification
+      // Pour une version plus sécurisée, vous pouvez ajouter l'authentification
       allow write: if true;
     }
   }
@@ -37,7 +37,7 @@ Cliquez sur **Publier** pour appliquer ces règles.
   3. Vérifier que ça fonctionne
 
 1. Attendez quelques minutes que GitHub Pages se mette à jour
-2. Visitez votre site : https://kazei-7.github.io/Ald-short-stories/
+2. Visitez votre site : https://kazei-7.github.io/Ald-short-stories/ ou **votre perso**
 3. Créez une histoire test
 4. Ouvrez le site dans un autre navigateur ou en navigation privée → vous devriez voir la même histoire !
 
@@ -49,25 +49,13 @@ Cliquez sur **Publier** pour appliquer ces règles.
   
  **Synchronisation automatique** : Les nouvelles histoires apparaissent pour tout le monde
 
- Sécurité ( pour plus tard)
-
-Pour l'instant, n'importe qui peut ajouter/supprimer des histoires. Si vous voulez limiter ça :
-
-1. Activez l'authentification Firebase (Google, Email, etc.)
-2. Modifiez les règles Firestore pour exiger une authentification
-3. Ajoutez un système de connexion au site
-
  Surveillance
 
 Pour voir vos données Firebase :
 - Firebase Console → Firestore Database
 - Vous y verrez toutes les histoires enregistrées
 
- Besoin d'aide ?
-
-Si quelque chose ne fonctionne pas :
-1. Ouvrez la console du navigateur (F12) pour voir les erreurs
-2. Vérifiez que les règles Firestore sont bien configurées
+figurées
 3. Assurez-vous que les fichiers sont bien uploadés sur GitHub
 
 
