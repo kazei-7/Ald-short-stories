@@ -49,13 +49,14 @@ Cliquez sur **Publier** pour appliquer ces règles.
   
  **Synchronisation automatique** : Les nouvelles histoires apparaissent pour tout le monde
 
- Surveillance
-
 Pour voir vos données Firebase :
 - Firebase Console → Firestore Database
 - Vous y verrez toutes les histoires enregistrées
 
-figurées
+Si quelque chose ne fonctionne pas :
+
+1. Ouvrez la console du navigateur (F12) pour voir les erreurs
+2. Vérifiez que les règles Firestore sont bien configurées
 3. Assurez-vous que les fichiers sont bien uploadés sur GitHub
 
 
