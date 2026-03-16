@@ -37,7 +37,7 @@ Cliquez sur **Publier** pour appliquer ces règles.
   3. Vérifier que ça fonctionne
 
 1. Attendez quelques minutes que GitHub Pages se mette à jour
-2. Visitez votre site : https://kazei-7.github.io/Ald-short-stories/ ou **votre perso**
+2. Visitez votre site : https://kazei-7.github.io/Ald-short-stories/ 
 3. Créez une histoire test
 4. Ouvrez le site dans un autre navigateur ou en navigation privée → vous devriez voir la même histoire !
 
